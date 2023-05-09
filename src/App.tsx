@@ -8,7 +8,7 @@ function App() {
   return (
     <AppContext>
       <div style={{ display: 'flex', width: '100%' }}>
-        <div style={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
           <BreedsList />
         </div>
         <div style={{ width: '50%' }}>

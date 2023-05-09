@@ -109,7 +109,7 @@ const Context = ({ children }: AppContextProps) => {
       const fetchAllBreeds = async () => {
         const { message } = await getBreeds()
         const breeds = Object.keys(message)
-        setBreeds(breeds.slice(0, 0))
+        setBreeds(breeds)
       }
       fetchAllBreeds()
     }
