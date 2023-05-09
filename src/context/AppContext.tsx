@@ -96,6 +96,8 @@ const Context = ({ children }: AppContextProps) => {
 
   const reset = () => {
     const nextBreed = breeds[Math.floor(Math.random() * breeds.length)]
+    setImageUrl('')
+    setNewRandomList({ list: breeds, current: nextBreed })
     dispatch({ type: AppActionKind.RESET, payload: { nextBreed } })
   }
 
@@ -109,7 +111,7 @@ const Context = ({ children }: AppContextProps) => {
       const fetchAllBreeds = async () => {
         const { message } = await getBreeds()
         const breeds = Object.keys(message)
-        setBreeds(breeds)
+        setBreeds(breeds.slice(0, 10))
       }
       fetchAllBreeds()
     }
