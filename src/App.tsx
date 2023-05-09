@@ -1,10 +1,21 @@
+import Questionnaire from './components/Questionnaire';
 import './App.css'
+import BreedsList from './components/BreedsList';
+import AppContext from './context/AppContext';
 
 function App() {
+  
   return (
-    <>
-      Dogs game
-    </>
+    <AppContext>
+      <div style={{ display: 'flex', width: '100%' }}>
+        <div style={{ width: '50%' }}>
+          <BreedsList />
+        </div>
+        <div style={{ width: '50%' }}>
+          <Questionnaire />
+        </div>
+      </div>
+    </AppContext>
   )
 }
 
