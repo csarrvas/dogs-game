@@ -1,7 +1,7 @@
 export enum AppActionKind {
   INCREASE = 'INCREASE',
   DECREASE = 'DECREASE',
-  SELECT_RANDOM = 'SELECT_RANDOM',
+  START = 'START',
   RESET = 'RESET'
 }
 
@@ -20,9 +20,13 @@ export type AppAction = {
 
 export type AppContextType = AppState & {
   breeds: string[]
+  imageUrl: string
+  finished: boolean
+  isCheatMode: boolean
   randomItems: string[]
-  decreaseScore: (points: number) => void,
-  increaseScore: (points: number) => void,
-  start: () => void,
+  decreaseScore: () => void,
+  increaseScore: () => void,
   reset: () => void,
+  start: () => void,
+  switchMode: () => void,
 }

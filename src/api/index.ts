@@ -4,7 +4,7 @@ export const getBreeds = async () => {
     const response = await api.json()
     return response
   } catch (e) {
-    console.log(e)
+    throw new Error(String(e));
   }
 }
 
@@ -14,6 +14,6 @@ export const getDogImage = async (breed: string) => {
     const response = await api.json()
     return response
   } catch (e) {
-    console.log(e)
+    throw new Error(String(e));
   }
 }
