@@ -18,6 +18,7 @@ const Questionnaire = () => {
     return (
       <>
         {<h1>{finished ? 'You won, congratulations!' : 'Sorry you lost'}</h1>}
+        {finished && <p>Your score was {score}pts</p>}
         <button style={{ padding: '0.5rem' }} onClick={newGame}>Reset the game</button>
       </>
     )
