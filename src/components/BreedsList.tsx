@@ -10,10 +10,6 @@ const BreedsList = () => {
     return isGuessed
   }
 
-  if (!breeds.length) {
-    return <h2>Loading...</h2>
-  }
-
   return (
     <>
       <button onClick={switchMode}>Swich to {isCheatMode ? 'normal' : 'cheat'} mode</button>

@@ -22,9 +22,8 @@ const defaultContext = {
   randomItems: [],
   decreaseScore: () => {},
   increaseScore: () => {},
-  start: () => {},
-  switchMode: () => {},
-  reset: () => {},
+  newGame: () => {},
+  switchMode: () => {}
 }
 
 const appReducer = (state: AppState, action: AppAction) => {
@@ -42,12 +41,7 @@ const appReducer = (state: AppState, action: AppAction) => {
         ...prevState,
         score: prevState.score - POINTS_PER_GUESS
       }
-    case AppActionKind.START:
-      return {
-        ...prevState,
-        currentBreed: action.payload?.nextBreed || ''
-      }
-    case AppActionKind.RESET:
+    case AppActionKind.NEW_GAME:
       return {
         ...initialState,
         currentBreed: action.payload?.nextBreed || ''
@@ -88,17 +82,11 @@ const Context = ({ children }: AppContextProps) => {
     dispatch({ type: AppActionKind.DECREASE })
   }
 
-  const start = () => {
-    const nextBreed = getNextRandom()
-    setNewRandomList({ list: breeds, current: nextBreed })
-    dispatch({ type: AppActionKind.START, payload: { nextBreed } })
-  }
-
-  const reset = () => {
+  const newGame = () => {
     const nextBreed = breeds[Math.floor(Math.random() * breeds.length)]
     setImageUrl('')
     setNewRandomList({ list: breeds, current: nextBreed })
-    dispatch({ type: AppActionKind.RESET, payload: { nextBreed } })
+    dispatch({ type: AppActionKind.NEW_GAME, payload: { nextBreed } })
   }
 
   const switchMode = () => {
@@ -111,7 +99,7 @@ const Context = ({ children }: AppContextProps) => {
       const fetchAllBreeds = async () => {
         const { message } = await getBreeds()
         const breeds = Object.keys(message)
-        setBreeds(breeds.slice(0, 10))
+        setBreeds(breeds)
       }
       fetchAllBreeds()
     }
@@ -140,8 +128,7 @@ const Context = ({ children }: AppContextProps) => {
     score,
     decreaseScore,
     increaseScore,
-    reset,
-    start,
+    newGame,
     switchMode,
   }
 

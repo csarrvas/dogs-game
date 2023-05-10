@@ -1,8 +1,7 @@
 export enum AppActionKind {
   INCREASE = 'INCREASE',
   DECREASE = 'DECREASE',
-  START = 'START',
-  RESET = 'RESET'
+  NEW_GAME = 'NEW_GAME'
 }
 
 export type AppState = {
@@ -26,7 +25,6 @@ export type AppContextType = AppState & {
   randomItems: string[]
   decreaseScore: () => void,
   increaseScore: () => void,
-  reset: () => void,
-  start: () => void,
+  newGame: () => void,
   switchMode: () => void,
 }

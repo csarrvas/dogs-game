@@ -1,20 +1,12 @@
-import Questionnaire from './components/Questionnaire';
-import './App.css'
-import BreedsList from './components/BreedsList';
 import AppContext from './context/AppContext';
+import Content from './components/Content';
+import './App.css'
 
 function App() {
   
   return (
     <AppContext>
-      <div style={{ display: 'flex', width: '100%' }}>
-        <div style={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-          <BreedsList />
-        </div>
-        <div style={{ width: '50%' }}>
-          <Questionnaire />
-        </div>
-      </div>
+      <Content />
     </AppContext>
   )
 }
