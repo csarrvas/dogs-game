@@ -7,19 +7,21 @@ import useWindowSize from '../hooks/useWindowSize'
 import { breakpoints } from '../constants'
 
 const Content = () => {
-  const { breeds } = useContext(AppContext)
+  const { allBreeds, breeds } = useContext(AppContext)
   const { width } = useWindowSize()
   const { laptop: { min } } = breakpoints
 
-  if (!breeds.length) {
+  console.log({allBreeds, breeds})
+
+  if (!allBreeds.length) {
     return <Spinner />
   }
 
   return (
-    <div style={{ display: 'flex', width: '100%', flexDirection: width < min ? 'column' : 'row', gap: '4rem' }}>
+    <div style={{ display: 'flex', width: '100%', flexDirection: width < min ? 'column' : 'row', gap: '4rem', justifyContent: 'center' }}>
       <div style={{
         width:  width < min ? '100%' : '50%',
-        display: 'flex',
+        display: breeds.length ? 'flex' : 'none',
         alignItems: 'center',
         flexDirection: 'column',
         overflowY: width < min ? 'unset' : 'auto',

@@ -18,11 +18,12 @@ export type AppAction = {
 }
 
 export type AppContextType = AppState & {
+  allBreeds: string[]
   breeds: string[]
   imageUrl: string
   finished: boolean
   isCheatMode: boolean
-  randomItems: string[]
+  randomOptions: string[]
   decreaseScore: () => void,
   increaseScore: () => void,
   newGame: () => void,

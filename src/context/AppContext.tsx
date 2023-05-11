@@ -6,6 +6,7 @@ import useRandomOptions from '../hooks/useRandomOptions';
 
 const POINTS_PER_GUESS = 2
 const INITIAL_SCORE = 10
+const NUMBER_OF_GUESSES = 8
 
 const initialState: AppState = {
   currentBreed: '',
@@ -15,11 +16,12 @@ const initialState: AppState = {
 
 const defaultContext = {
   ...initialState,
+  allBreeds: [],
   breeds: [],
   imageUrl: '',
   finished: false,
   isCheatMode: false,
-  randomItems: [],
+  randomOptions: [],
   decreaseScore: () => {},
   increaseScore: () => {},
   newGame: () => {},
@@ -59,9 +61,10 @@ export const AppContext = createContext<AppContextType>(defaultContext)
 
 const Context = ({ children }: AppContextProps) => {
   const firstRender = useRef<boolean>(true)
+  const [allBreeds, setAllBreeds] = useState<string[]>([])
   const [breeds, setBreeds] = useState<string[]>([])
   const [{ currentBreed, guessed, score }, dispatch] = useReducer(appReducer, initialState)
-  const { randomItems, setNewRandomList } = useRandomOptions()
+  const { randomOptions, setNewRandomOptions, getNewRandomList } = useRandomOptions()
   const [imageUrl, setImageUrl] = useState<string>('')
   const [isCheatMode, setIsCheatMode] = useState<boolean>(false)
 
@@ -72,21 +75,24 @@ const Context = ({ children }: AppContextProps) => {
     return nextBreed
   }
 
+  const newGame = () => {
+    const random = getNewRandomList({ list: allBreeds, number: NUMBER_OF_GUESSES })
+    const nextBreed = random[Math.floor(Math.random() * random.length)]
+    setImageUrl('')
+    setIsCheatMode(false)
+    setBreeds(random)
+    setNewRandomOptions({ list: random, current: nextBreed })
+    dispatch({ type: AppActionKind.NEW_GAME, payload: { nextBreed } })
+  }
+
   const increaseScore = () => {
     const nextBreed = getNextRandom()
-    setNewRandomList({ list: breeds, current: nextBreed })
+    setNewRandomOptions({ list: breeds, current: nextBreed })
     dispatch({ type: AppActionKind.INCREASE, payload: { nextBreed } })
   }
 
   const decreaseScore = () => {
     dispatch({ type: AppActionKind.DECREASE })
-  }
-
-  const newGame = () => {
-    const nextBreed = breeds[Math.floor(Math.random() * breeds.length)]
-    setImageUrl('')
-    setNewRandomList({ list: breeds, current: nextBreed })
-    dispatch({ type: AppActionKind.NEW_GAME, payload: { nextBreed } })
   }
 
   const switchMode = () => {
@@ -98,8 +104,8 @@ const Context = ({ children }: AppContextProps) => {
       firstRender.current = false
       const fetchAllBreeds = async () => {
         const { message } = await getBreeds()
-        const breeds = Object.keys(message)
-        setBreeds(breeds)
+        const fetchedBreeds = Object.keys(message)
+        setAllBreeds(fetchedBreeds)
       }
       fetchAllBreeds()
     }
@@ -115,16 +121,17 @@ const Context = ({ children }: AppContextProps) => {
     }
   }, [currentBreed])
 
-  const finished = breeds.length === guessed.length
+  const finished = Boolean(breeds.length && breeds.length === guessed.length)
 
   const value = {
+    allBreeds,
     breeds,
     currentBreed,
     finished,
     guessed,
     imageUrl,
     isCheatMode,
-    randomItems,
+    randomOptions,
     score,
     decreaseScore,
     increaseScore,
