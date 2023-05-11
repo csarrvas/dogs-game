@@ -43,7 +43,7 @@ const Questionnaire = () => {
         ))}
       </div>
       {currentBreed ? (
-        <button style={{ padding: '0.5rem' }} onClick={handleSelect}>Select</button>
+        <button style={{ padding: '0.5rem' }} onClick={handleSelect} disabled={!selectedDog}>Check</button>
       ) : (
         <button style={{ padding: '0.5rem' }} onClick={newGame}>Let's play!</button>
       )}
